@@ -312,27 +312,40 @@ python -m src.models.ml_models
         
         # Geographic features
         st.write("**🗺️ Geographic Location**")
-        col3, col4 = st.columns(2)
         
-        with col3:
-            latitude = st.slider(
-                "Latitude",
-                min_value=float(self.feature_stats['Latitude']['min']),
-                max_value=float(self.feature_stats['Latitude']['max']),
-                value=float(self.feature_stats['Latitude']['mean']),
-                step=0.01,
-                help="Geographic latitude of the block group"
-            )
+        # California city locations (latitude, longitude)
+        california_cities = {
+            "Los Angeles": (34.05, -118.24),
+            "San Francisco": (37.77, -122.42),
+            "San Diego": (32.72, -117.16),
+            "Sacramento": (38.58, -121.49),
+            "San Jose": (37.34, -121.89),
+            "Fresno": (36.73, -119.79),
+            "Long Beach": (33.77, -118.19),
+            "Oakland": (37.80, -122.27),
+            "Bakersfield": (35.37, -119.04),
+            "Anaheim": (33.84, -117.91),
+            "Riverside": (33.95, -117.40),
+            "Stockton": (37.96, -121.29),
+            "Chula Vista": (32.64, -117.08),
+            "Irvine": (33.68, -117.83),
+            "Fremont": (37.55, -121.99),
+            "Santa Ana": (33.75, -117.87),
+            "Average California Location": (34.2, -118.5)  # Default
+        }
         
-        with col4:
-            longitude = st.slider(
-                "Longitude",
-                min_value=float(self.feature_stats['Longitude']['min']),
-                max_value=float(self.feature_stats['Longitude']['max']),
-                value=float(self.feature_stats['Longitude']['mean']),
-                step=0.01,
-                help="Geographic longitude of the block group"
-            )
+        selected_city = st.selectbox(
+            "Select a California City/Region:",
+            options=list(california_cities.keys()),
+            index=len(california_cities) - 1,  # Default to "Average California Location"
+            help="Choose a city to automatically set the geographic coordinates"
+        )
+        
+        latitude, longitude = california_cities[selected_city]
+        
+        # Show selected coordinates for reference
+        if selected_city != "Average California Location":
+            st.info(f"📍 {selected_city}: Lat {latitude:.2f}, Long {longitude:.2f}")
         
         # Create input dataframe
         input_data = pd.DataFrame({
@@ -416,10 +429,11 @@ python -m src.models.ml_models
                 # Calculate ensemble prediction (average)
                 ensemble_pred = np.mean(list(predictions.values()))
                 
-                # Display main prediction
+                # Display main prediction (model predicts in hundreds of thousands)
+                predicted_value = ensemble_pred * 100000  # Convert to actual dollars
                 st.markdown(f"""
                 <div class="prediction-result">
-                    Predicted House Value: ${ensemble_pred:.0f},000
+                    Predicted House Value: ${predicted_value:,.0f}
                 </div>
                 """, unsafe_allow_html=True)
                 
@@ -431,7 +445,7 @@ python -m src.models.ml_models
                 for model_name, pred_value in predictions.items():
                     row = {
                         'Model': model_name,
-                        'Prediction (thousands)': round(pred_value, 1)
+                        'Prediction ($)': f"${pred_value * 100000:,.0f}"
                     }
                     
                     # Add performance info if available
@@ -442,22 +456,34 @@ python -m src.models.ml_models
                     
                     pred_data.append(row)
                 
+                # Display predictions table
                 pred_df = pd.DataFrame(pred_data)
+                st.dataframe(pred_df, use_container_width=True)
                 
-                # Create bar chart
-                fig = px.bar(pred_df, x='Model', y='Prediction (thousands)',
+                # Create bar chart with actual values for comparison
+                chart_data = []
+                for model_name, pred_value in predictions.items():
+                    chart_data.append({
+                        'Model': model_name,
+                        'Prediction': pred_value * 100000
+                    })
+                chart_df = pd.DataFrame(chart_data)
+                
+                fig = px.bar(chart_df, x='Model', y='Prediction',
                            title='Predictions by Different Models',
-                           color='Prediction (thousands)',
+                           color='Prediction',
                            color_continuous_scale='viridis')
-                fig.update_layout(height=400)
+                fig.update_layout(height=400, yaxis_tickformat='$,.0f')
                 st.plotly_chart(fig, use_container_width=True)
                 
                 # Prediction confidence
-                pred_std = np.std(list(predictions.values()))
+                pred_std = np.std(list(predictions.values())) * 100000  # Convert to dollars
+                pred_range_low = (ensemble_pred - np.std(list(predictions.values()))) * 100000
+                pred_range_high = (ensemble_pred + np.std(list(predictions.values()))) * 100000
                 st.info(f"""
                 **Prediction Confidence:**
-                - Standard Deviation: ${pred_std:.1f}k
-                - Prediction Range: ${ensemble_pred - pred_std:.0f}k - ${ensemble_pred + pred_std:.0f}k
+                - Standard Deviation: ${pred_std:,.0f}
+                - Prediction Range: ${pred_range_low:,.0f} - ${pred_range_high:,.0f}
                 """)
             
         except Exception as e:
