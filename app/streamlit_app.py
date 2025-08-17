@@ -40,7 +40,7 @@ class HousePricePredictionApp:
         """Configure Streamlit page settings."""
         st.set_page_config(
             page_title="California House Price Predictor",
-            page_icon="🏠",
+            page_icon="house",
             layout="wide",
             initial_sidebar_state="expanded"
         )
@@ -141,7 +141,7 @@ class HousePricePredictionApp:
     def run(self):
         """Run the Streamlit application."""
         # Header
-        st.markdown('<h1 class="main-header">🏠 California House Price Predictor</h1>', 
+        st.markdown('<h1 class="main-header">California House Price Predictor</h1>', 
                    unsafe_allow_html=True)
         
         st.markdown("""
@@ -169,12 +169,12 @@ class HousePricePredictionApp:
     
     def show_home_page(self):
         """Display the home page."""
-        st.header("🎯 Project Overview")
+        st.header("Project Overview")
         
         col1, col2 = st.columns(2)
         
         with col1:
-            st.subheader("📊 Dataset Information")
+            st.subheader("Dataset Information")
             if self.sample_data is not None:
                 st.info(f"""
                 **California Housing Dataset**
@@ -184,7 +184,7 @@ class HousePricePredictionApp:
                 - **Data Source**: Sklearn built-in dataset
                 """)
                 
-                st.subheader("🏘️ Features Description")
+                st.subheader("Features Description")
                 feature_descriptions = {
                     'MedInc': 'Median income in block group',
                     'HouseAge': 'Median house age in block group',
@@ -200,7 +200,7 @@ class HousePricePredictionApp:
                     st.write(f"**{feature}**: {description}")
         
         with col2:
-            st.subheader("🤖 Machine Learning Pipeline")
+            st.subheader("Machine Learning Pipeline")
             st.success("""
             **Our ML Pipeline includes:**
             
@@ -214,7 +214,7 @@ class HousePricePredictionApp:
             """)
             
             if self.sample_data is not None:
-                st.subheader("📈 Quick Stats")
+                st.subheader("Quick Stats")
                 col2_1, col2_2 = st.columns(2)
                 with col2_1:
                     st.metric("Avg House Value", f"${self.target_data.mean():.0f}k")
@@ -225,11 +225,11 @@ class HousePricePredictionApp:
     
     def show_prediction_page(self):
         """Display the prediction page."""
-        st.header("🔮 Make House Price Prediction")
+        st.header("Make House Price Prediction")
         
         if not self.models_loaded:
             st.warning("""
-            ⚠️ **No pre-trained models found!** 
+            **No pre-trained models found!** 
             
             To use the prediction feature, you need to train models first. 
             Please run the training pipeline to generate trained models.
@@ -238,7 +238,7 @@ class HousePricePredictionApp:
             """)
             
             # Show training instructions
-            with st.expander("📋 How to train models"):
+            with st.expander("How to train models"):
                 st.code("""
 # Run the following commands to train models:
 cd /path/to/your/project
@@ -247,12 +247,12 @@ python -m src.models.ml_models
                 """)
         
         # Input form
-        st.subheader("🏠 Enter House Characteristics")
+        st.subheader("Enter House Characteristics")
         
         col1, col2 = st.columns(2)
         
         with col1:
-            st.write("**📊 Economic & Demographic Features**")
+            st.write("**Economic & Demographic Features**")
             
             median_income = st.slider(
                 "Median Income (tens of thousands)",
@@ -281,7 +281,7 @@ python -m src.models.ml_models
             )
         
         with col2:
-            st.write("**🏘️ Housing Features**")
+            st.write("**Housing Features**")
             
             house_age = st.slider(
                 "House Age (years)",
@@ -311,7 +311,7 @@ python -m src.models.ml_models
             )
         
         # Geographic features
-        st.write("**🗺️ Geographic Location**")
+        st.write("**Geographic Location**")
         
         # California city locations (latitude, longitude)
         california_cities = {
@@ -345,7 +345,7 @@ python -m src.models.ml_models
         
         # Show selected coordinates for reference
         if selected_city != "Average California Location":
-            st.info(f"📍 {selected_city}: Lat {latitude:.2f}, Long {longitude:.2f}")
+            st.info(f"{selected_city}: Lat {latitude:.2f}, Long {longitude:.2f}")
         
         # Create input dataframe
         input_data = pd.DataFrame({
@@ -360,11 +360,11 @@ python -m src.models.ml_models
         })
         
         # Show input summary
-        st.subheader("📋 Input Summary")
+        st.subheader("Input Summary")
         st.dataframe(input_data.T, use_container_width=True)
         
         # Prediction button
-        if st.button("🔮 Predict House Price", type="primary"):
+        if st.button("Predict House Price", type="primary"):
             if self.models_loaded:
                 self.make_prediction(input_data)
             else:
@@ -376,28 +376,28 @@ python -m src.models.ml_models
     def make_prediction(self, input_data):
         """Make prediction using trained models."""
         try:
-            st.subheader("🎯 Prediction Results")
+            st.subheader("Prediction Results")
             
             # Apply the same preprocessing and feature engineering pipeline used during training
             if hasattr(self, 'feature_pipeline') and self.feature_pipeline:
-                st.info("🔧 Applying trained feature engineering pipeline...")
+                st.info("Applying trained feature engineering pipeline...")
                 try:
                     # Use the loaded feature pipeline
                     input_featured = self.feature_pipeline.transform(input_data)
-                    st.success(f"✅ Features engineered: {input_data.shape[1]} → {input_featured.shape[1]} features")
+                    st.success(f"Features engineered: {input_data.shape[1]} → {input_featured.shape[1]} features")
                     
                     # Show feature engineering details
                     if hasattr(self, 'model_info') and 'feature_names' in self.model_info:
-                        with st.expander("🔍 Feature Engineering Details"):
+                        with st.expander("Feature Engineering Details"):
                             st.write("**Original Features:**", self.model_info.get('original_features', []))
                             st.write("**Engineered Features:**", self.model_info.get('feature_names', []))
                     
                 except Exception as e:
-                    st.error(f"❌ Feature engineering failed: {str(e)}")
-                    st.info("🔄 Falling back to original features...")
+                    st.error(f"Feature engineering failed: {str(e)}")
+                    st.info("Falling back to original features...")
                     input_featured = input_data
             else:
-                st.warning("⚠️ Feature pipeline not loaded. Using original features.")
+                st.warning("Feature pipeline not loaded. Using original features.")
                 input_featured = input_data
             
             predictions = {}
@@ -411,7 +411,7 @@ python -m src.models.ml_models
                         # Check if all expected features are available
                         missing_features = set(expected_features) - set(available_features)
                         if missing_features:
-                            st.warning(f"⚠️ {model_name}: Missing features {missing_features}, skipping model")
+                            st.warning(f"{model_name}: Missing features {missing_features}, skipping model")
                             continue
                         
                         # Use only the features the model expects, in the correct order
@@ -438,7 +438,7 @@ python -m src.models.ml_models
                 """, unsafe_allow_html=True)
                 
                 # Show individual model predictions
-                st.subheader("🤖 Individual Model Predictions")
+                st.subheader("Individual Model Predictions")
                 
                 # Create DataFrame with predictions and performance info
                 pred_data = []
@@ -491,7 +491,7 @@ python -m src.models.ml_models
     
     def show_feature_insights(self, input_row):
         """Show insights about the input features."""
-        st.subheader("💡 Feature Insights")
+        st.subheader("Feature Insights")
         
         col1, col2 = st.columns(2)
         
@@ -531,14 +531,14 @@ python -m src.models.ml_models
     
     def show_data_exploration_page(self):
         """Display data exploration page."""
-        st.header("📊 Data Exploration")
+        st.header("Data Exploration")
         
         if self.sample_data is None:
             st.error("No data available for exploration.")
             return
         
         # Dataset overview
-        st.subheader("📈 Dataset Overview")
+        st.subheader("Dataset Overview")
         
         col1, col2, col3 = st.columns(3)
         with col1:
@@ -549,7 +549,7 @@ python -m src.models.ml_models
             st.metric("Missing Values", self.sample_data.isnull().sum().sum())
         
         # Feature distributions
-        st.subheader("📊 Feature Distributions")
+        st.subheader("Feature Distributions")
         
         selected_feature = st.selectbox(
             "Select feature to explore:",
@@ -571,7 +571,7 @@ python -m src.models.ml_models
             st.plotly_chart(fig, use_container_width=True)
         
         # Correlation matrix
-        st.subheader("🔗 Feature Correlations")
+        st.subheader("Feature Correlations")
         
         corr_matrix = self.sample_data.corr()
         fig = px.imshow(corr_matrix, text_auto=True, aspect="auto",
@@ -580,7 +580,7 @@ python -m src.models.ml_models
         st.plotly_chart(fig, use_container_width=True)
         
         # Geographic visualization
-        st.subheader("🗺️ Geographic Distribution")
+        st.subheader("Geographic Distribution")
         
         if 'Latitude' in self.sample_data.columns and 'Longitude' in self.sample_data.columns:
             # Sample data for performance
@@ -606,7 +606,7 @@ python -m src.models.ml_models
     
     def show_model_performance_page(self):
         """Display model performance page."""
-        st.header("🎯 Model Performance")
+        st.header("Model Performance")
         
         # Check if evaluation results exist
         if os.path.exists('models/artifacts'):
@@ -632,7 +632,7 @@ python -m src.models.ml_models
         
         # Performance comparison (if multiple models)
         if self.models_loaded:
-            st.subheader("🏆 Model Comparison")
+            st.subheader("Model Comparison")
             st.info("""
             Model comparison would show here if evaluation results were available.
             This would include metrics like RMSE, MAE, R² score, and training time.
@@ -642,7 +642,7 @@ python -m src.models.ml_models
         """Display performance results for a single model."""
         model_name = results.get('model_name', 'Unknown Model')
         
-        st.subheader(f"📈 {model_name} Performance")
+        st.subheader(f"{model_name} Performance")
         
         # Key metrics
         test_metrics = results.get('metrics', {}).get('test', {})
@@ -661,7 +661,7 @@ python -m src.models.ml_models
         # Feature importance (if available)
         feature_importance = results.get('feature_importance')
         if feature_importance and feature_importance.get('scores'):
-            st.subheader("🎯 Feature Importance")
+            st.subheader("Feature Importance")
             
             importance_data = feature_importance['scores']
             top_features = dict(list(importance_data.items())[:10])
@@ -677,21 +677,21 @@ python -m src.models.ml_models
     
     def show_about_page(self):
         """Display about page."""
-        st.header("ℹ️ About This Project")
+        st.header("About This Project")
         
         st.markdown("""
-        ## 🏠 California House Price Prediction
+        ## California House Price Prediction
         
         This is a comprehensive machine learning project that demonstrates an end-to-end ML pipeline
         for predicting house prices in California using the famous California housing dataset.
         
-        ### 🎯 Project Goals
+        ### Project Goals
         - Demonstrate complete ML workflow from data ingestion to deployment
         - Compare multiple machine learning algorithms
         - Provide interactive predictions through a web interface
         - Show best practices in ML engineering
         
-        ### 🛠️ Technologies Used
+        ### Technologies Used
         - **Python** - Primary programming language
         - **Scikit-learn** - Machine learning library
         - **XGBoost** - Gradient boosting framework
@@ -700,7 +700,7 @@ python -m src.models.ml_models
         - **Plotly** - Interactive visualizations
         - **Optuna** - Hyperparameter optimization
         
-        ### 📊 Machine Learning Pipeline
+        ### Machine Learning Pipeline
         
         1. **Data Ingestion** - Load California housing dataset
         2. **Data Preprocessing** - Clean, scale, and prepare data
@@ -710,7 +710,7 @@ python -m src.models.ml_models
         6. **Model Evaluation** - Comprehensive performance analysis
         7. **Web Deployment** - Interactive Streamlit application
         
-        ### 🏗️ Project Structure
+        ### Project Structure
         ```
         End-to-END-ML-Pipeline/
         ├── data/                   # Data storage
@@ -726,7 +726,7 @@ python -m src.models.ml_models
         └── requirements.txt       # Dependencies
         ```
         
-        ### 🤖 Available Models
+        ### Available Models
         - Linear Regression
         - Ridge Regression
         - Lasso Regression
@@ -737,7 +737,7 @@ python -m src.models.ml_models
         - Support Vector Regression
         - K-Nearest Neighbors
         
-        ### 📈 Model Evaluation Metrics
+        ### Model Evaluation Metrics
         - Root Mean Square Error (RMSE)
         - Mean Absolute Error (MAE)
         - R² Score (Coefficient of Determination)
@@ -745,7 +745,7 @@ python -m src.models.ml_models
         - Residual Analysis
         - Feature Importance
         
-        ### 🚀 Getting Started
+        ### Getting Started
         
         To run this project locally:
         
@@ -753,7 +753,7 @@ python -m src.models.ml_models
         2. Install dependencies: `pip install -r requirements.txt`
         3. Run the Streamlit app: `streamlit run app/streamlit_app.py`
         
-        ### 📝 Note
+        ### Note
         This project is designed for educational and demonstration purposes, 
         showcasing best practices in machine learning engineering and deployment.
         """)
@@ -762,7 +762,7 @@ python -m src.models.ml_models
         st.markdown("---")
         st.markdown("""
         <div style='text-align: center'>
-            <p>Built with ❤️ using Streamlit and Python</p>
+            <p>Built with Streamlit and Python</p>
             <p>© 2024 - End-to-End ML Pipeline Project</p>
         </div>
         """, unsafe_allow_html=True)
