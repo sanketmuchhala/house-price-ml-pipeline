@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# Testing
+.pytest_cache/
+test_*.py
+debug_*.py
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Data (large files)
+data/raw/
+data/processed/
+*.csv
+*.parquet
+
+# Models (will be generated during deployment)
+models/artifacts/
+models/evaluation/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Documentation
+docs/
+*.md
+README.md
+
+# Git
+.git/
+.gitignore
