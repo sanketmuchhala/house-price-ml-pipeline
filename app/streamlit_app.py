@@ -608,35 +608,115 @@ python -m src.models.ml_models
         """Display model performance page."""
         st.header("Model Performance")
         
-        # Check if evaluation results exist
-        if os.path.exists('models/artifacts'):
-            artifact_files = os.listdir('models/artifacts')
-            eval_files = [f for f in artifact_files if 'evaluation_results.json' in f]
+        # Check if models are loaded and display their performance
+        if self.models_loaded and hasattr(self, 'model_info') and self.model_info:
+            st.success("Model performance information loaded from trained models!")
             
-            if eval_files:
-                st.success("Model evaluation results found!")
-                
-                # Load and display evaluation results
-                for eval_file in eval_files:
-                    try:
-                        with open(os.path.join('models/artifacts', eval_file), 'r') as f:
-                            results = json.load(f)
-                        
-                        self.display_model_performance(results)
-                    except Exception as e:
-                        st.error(f"Error loading {eval_file}: {str(e)}")
-            else:
-                st.warning("No model evaluation results found.")
-        else:
-            st.warning("No model artifacts directory found.")
-        
-        # Performance comparison (if multiple models)
-        if self.models_loaded:
+            # Display performance comparison
             st.subheader("Model Comparison")
-            st.info("""
-            Model comparison would show here if evaluation results were available.
-            This would include metrics like RMSE, MAE, R² score, and training time.
-            """)
+            
+            if 'models' in self.model_info:
+                # Create performance comparison table
+                perf_data = []
+                for model_name, model_data in self.model_info['models'].items():
+                    if 'performance' in model_data:
+                        perf = model_data['performance']
+                        perf_data.append({
+                            'Model': model_name.replace('_', ' ').title(),
+                            'Test RMSE': f"{perf.get('test_rmse', 0):.4f}",
+                            'Test R²': f"{perf.get('test_r2', 0):.4f}",
+                            'CV RMSE': f"{perf.get('cv_rmse', 0):.4f}"
+                        })
+                
+                if perf_data:
+                    import pandas as pd
+                    perf_df = pd.DataFrame(perf_data)
+                    st.dataframe(perf_df, use_container_width=True)
+                    
+                    # Create performance visualization
+                    import plotly.express as px
+                    
+                    # RMSE comparison
+                    st.subheader("Model Performance Visualization")
+                    
+                    col1, col2 = st.columns(2)
+                    
+                    with col1:
+                        # Test RMSE comparison
+                        rmse_data = []
+                        for model_name, model_data in self.model_info['models'].items():
+                            if 'performance' in model_data:
+                                rmse_data.append({
+                                    'Model': model_name.replace('_', ' ').title(),
+                                    'RMSE': model_data['performance'].get('test_rmse', 0)
+                                })
+                        
+                        if rmse_data:
+                            rmse_df = pd.DataFrame(rmse_data)
+                            fig_rmse = px.bar(rmse_df, x='Model', y='RMSE', 
+                                            title='Test RMSE Comparison (Lower is Better)',
+                                            color='RMSE', color_continuous_scale='RdYlBu_r')
+                            fig_rmse.update_layout(height=400)
+                            st.plotly_chart(fig_rmse, use_container_width=True)
+                    
+                    with col2:
+                        # R² comparison
+                        r2_data = []
+                        for model_name, model_data in self.model_info['models'].items():
+                            if 'performance' in model_data:
+                                r2_data.append({
+                                    'Model': model_name.replace('_', ' ').title(),
+                                    'R²': model_data['performance'].get('test_r2', 0)
+                                })
+                        
+                        if r2_data:
+                            r2_df = pd.DataFrame(r2_data)
+                            fig_r2 = px.bar(r2_df, x='Model', y='R²', 
+                                          title='Test R² Score (Higher is Better)',
+                                          color='R²', color_continuous_scale='Viridis')
+                            fig_r2.update_layout(height=400)
+                            st.plotly_chart(fig_r2, use_container_width=True)
+                    
+                    # Model interpretation
+                    st.subheader("Performance Interpretation")
+                    
+                    # Find best model
+                    best_rmse_model = min(self.model_info['models'].items(), 
+                                        key=lambda x: x[1]['performance'].get('test_rmse', float('inf')))
+                    best_r2_model = max(self.model_info['models'].items(), 
+                                      key=lambda x: x[1]['performance'].get('test_r2', 0))
+                    
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        st.metric("Best RMSE Model", 
+                                best_rmse_model[0].replace('_', ' ').title(),
+                                f"RMSE: {best_rmse_model[1]['performance'].get('test_rmse', 0):.4f}")
+                    
+                    with col2:
+                        st.metric("Best R² Model", 
+                                best_r2_model[0].replace('_', ' ').title(),
+                                f"R²: {best_r2_model[1]['performance'].get('test_r2', 0):.4f}")
+                    
+                    # Feature information
+                    if 'feature_names' in self.model_info:
+                        st.subheader("Feature Engineering Summary")
+                        st.info(f"""
+                        **Original Features:** {len(self.model_info.get('original_features', []))}  
+                        **Engineered Features:** {len(self.model_info.get('feature_names', []))}  
+                        **Feature Engineering Ratio:** {len(self.model_info.get('feature_names', [])) / len(self.model_info.get('original_features', [1])):.1f}x
+                        """)
+                        
+                        with st.expander("View All Engineered Features"):
+                            features = self.model_info.get('feature_names', [])
+                            for i, feature in enumerate(features, 1):
+                                st.write(f"{i}. {feature}")
+                
+                else:
+                    st.warning("No performance data available in model info.")
+            else:
+                st.warning("No model information available.")
+        else:
+            st.warning("No trained models found. Please train models first to view performance metrics.")
     
     def display_model_performance(self, results):
         """Display performance results for a single model."""

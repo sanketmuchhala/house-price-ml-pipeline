@@ -1,4 +1,4 @@
-# 🏠 End-to-End ML Pipeline for House Price Prediction
+# End-to-End ML Pipeline for House Price Prediction
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -6,7 +6,7 @@
 
 A comprehensive machine learning pipeline for predicting California house prices, demonstrating production-ready ML engineering practices from data ingestion to web deployment.
 
-## 🎯 Project Overview
+## Project Overview
 
 This project implements a complete end-to-end machine learning pipeline that:
 
@@ -17,7 +17,7 @@ This project implements a complete end-to-end machine learning pipeline that:
 - **Deploys** an interactive web application for real-time predictions
 - **Maintains** production-ready code with logging, error handling, and comprehensive testing
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 End-to-End ML Pipeline
@@ -28,41 +28,41 @@ End-to-End ML Pipeline
 └── Infrastructure Layer │ Logging, Testing, Configuration
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 End-to-END-ML-Pipeline/
-├── 📂 data/                    # Data storage
+├── data/                    # Data storage
 │   ├── raw/                   # Raw datasets
 │   └── processed/             # Processed datasets and artifacts
-├── 📂 src/                     # Source code
-│   ├── 📂 data/               # Data processing modules
+├── src/                     # Source code
+│   ├── data/               # Data processing modules
 │   │   ├── data_ingestion.py  # Dataset loading and management
 │   │   └── data_preprocessing.py # Cleaning and preprocessing
-│   ├── 📂 features/           # Feature engineering
+│   ├── features/           # Feature engineering
 │   │   └── feature_engineering.py # Feature creation and selection
-│   ├── 📂 models/             # Machine learning models
+│   ├── models/             # Machine learning models
 │   │   ├── ml_models.py       # Model training and comparison
 │   │   ├── hyperparameter_tuning.py # Optimization strategies
 │   │   └── model_evaluation.py # Performance evaluation
-│   ├── 📂 visualization/      # Data visualization
+│   ├── visualization/      # Data visualization
 │   │   └── eda.py            # Exploratory data analysis
-│   └── 📂 utils/             # Utilities
+│   └── utils/             # Utilities
 │       └── logging_config.py # Logging and error handling
-├── 📂 app/                    # Web application
+├── app/                    # Web application
 │   └── streamlit_app.py      # Interactive Streamlit interface
-├── 📂 models/                 # Trained models and artifacts
+├── models/                 # Trained models and artifacts
 │   ├── trained/              # Serialized models
 │   └── artifacts/            # Evaluation results and metadata
-├── 📂 notebooks/             # Jupyter notebooks for exploration
-├── 📂 tests/                 # Unit tests
-├── 📂 logs/                  # Application logs
+├── notebooks/             # Jupyter notebooks for exploration
+├── tests/                 # Unit tests
+├── logs/                  # Application logs
 ├── requirements.txt          # Python dependencies
 ├── run_app.py               # Application launcher
 └── README.md                # Project documentation
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -101,7 +101,7 @@ End-to-END-ML-Pipeline/
 
 5. **Open your browser** to `http://localhost:8501` to access the application
 
-## 📊 Dataset Information
+## Dataset Information
 
 **California Housing Dataset**
 - **Source**: Scikit-learn built-in dataset
@@ -122,7 +122,7 @@ End-to-END-ML-Pipeline/
 | `Latitude` | Block group latitude |
 | `Longitude` | Block group longitude |
 
-## 🔧 Core Components
+## Core Components
 
 ### 1. Data Pipeline
 
@@ -190,7 +190,7 @@ End-to-END-ML-Pipeline/
 - **Model Performance**: Comparison charts and evaluation metrics
 - **Geographic Visualization**: Interactive maps with house price distributions
 
-## 🎮 Usage Examples
+## Usage Examples
 
 ### Training Models
 
@@ -269,7 +269,7 @@ print(report)
 evaluator.create_evaluation_plots(best_name)
 ```
 
-## 🧪 Testing
+## Testing
 
 The project includes comprehensive unit tests covering all major components.
 
@@ -293,7 +293,7 @@ python tests/run_tests.py --coverage
 - **Model Training**: Algorithm training, evaluation, and persistence
 - **Error Handling**: Exception handling and logging functionality
 
-## 📊 Performance Metrics
+## Performance Metrics
 
 ### Model Comparison Example
 
@@ -305,7 +305,7 @@ python tests/run_tests.py --coverage
 | Ridge Regression | 0.573 | 0.578 | 0.743 | 0.421 | 0.03s |
 | Linear Regression | 0.574 | 0.579 | 0.742 | 0.422 | 0.02s |
 
-## 🔍 Monitoring and Logging
+## Monitoring and Logging
 
 ### Logging System
 
@@ -322,7 +322,7 @@ The project implements comprehensive logging with:
 - **Graceful Degradation**: Fallback mechanisms for non-critical errors
 - **Context Preservation**: Detailed error context for debugging
 
-## 🌐 Web Application Features
+## Web Application Features
 
 ### Home Page
 - Project overview and dataset information
@@ -347,7 +347,7 @@ The project implements comprehensive logging with:
 - Feature importance rankings
 - Residual analysis and diagnostic plots
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -385,7 +385,7 @@ models_config = {
 trainer = ModelTrainer(models_config=models_config)
 ```
 
-## 🚀 Deployment Options
+## Deployment Options
 
 ### Local Deployment
 ```bash
@@ -415,7 +415,7 @@ CMD ["streamlit", "run", "app/streamlit_app.py", "--server.address", "0.0.0.0"]
 - **Heroku**: Using Procfile and requirements.txt
 - **AWS/GCP/Azure**: Container-based deployment with Docker
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
 
@@ -434,7 +434,7 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 - **Type Hints**: Use type annotations where appropriate
 - **Docstrings**: Google-style docstrings for all functions and classes
 
-## 📈 Future Enhancements
+## Future Enhancements
 
 ### Planned Features
 - [ ] **MLOps Integration**: MLflow for experiment tracking
@@ -453,7 +453,7 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 - **Real-time Predictions**: Streaming prediction pipeline
 - **Multi-model Ensemble**: Advanced ensemble techniques
 
-## 📚 Learning Resources
+## Learning Resources
 
 ### Machine Learning
 - [Hands-On Machine Learning](https://www.oreilly.com/library/view/hands-on-machine-learning/9781492032632/)
@@ -465,7 +465,7 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 - [Machine Learning Design Patterns](https://www.oreilly.com/library/view/machine-learning-design/9781098115777/)
 - [MLOps: Continuous Delivery for Machine Learning](https://martinfowler.com/articles/cd4ml.html)
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -493,11 +493,11 @@ streamlit run app/streamlit_app.py --server.port 8502
 pip install -r requirements.txt --force-reinstall
 ```
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **Scikit-learn** team for the California housing dataset
 - **Streamlit** team for the amazing web framework
@@ -505,7 +505,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Optuna** team for the hyperparameter optimization library
 - **Open Source Community** for the fantastic ML ecosystem
 
-## 📞 Contact
+## Contact
 
 - **GitHub Issues**: [Create an issue](https://github.com/your-username/End-to-END-ML-Pipeline/issues)
 - **Email**: your.email@example.com
@@ -515,8 +515,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-**⭐ If you find this project helpful, please consider giving it a star! ⭐**
+**If you find this project helpful, please consider giving it a star!**
 
-Built with ❤️ using Python, Scikit-learn, XGBoost, and Streamlit
+Built with Python, Scikit-learn, XGBoost, and Streamlit
 
 </div>
