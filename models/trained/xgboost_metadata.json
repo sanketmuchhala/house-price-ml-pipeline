@@ -1,0 +1,67 @@
+{
+  "model_name": "xgboost",
+  "training_time": 0.209319,
+  "cv_scores": {
+    "mean_rmse": 0.48349002885018066,
+    "std_rmse": 0.002663428714119794,
+    "scores": [
+      0.48549160438052574,
+      0.47972590065718534,
+      0.4852525815128308
+    ]
+  },
+  "train_metrics": {
+    "rmse": 0.3707573243517722,
+    "mae": 0.2619182933938468,
+    "r2": 0.8931140271527411,
+    "mse": 0.13746099356048522
+  },
+  "test_metrics": {
+    "rmse": 0.4752252736064294,
+    "mae": 0.3221486339197741,
+    "r2": 0.8213801851994709,
+    "mse": 0.2258390606743057
+  },
+  "model_params": {
+    "objective": "reg:squarederror",
+    "base_score": null,
+    "booster": null,
+    "callbacks": null,
+    "colsample_bylevel": null,
+    "colsample_bynode": null,
+    "colsample_bytree": 0.8,
+    "device": null,
+    "early_stopping_rounds": null,
+    "enable_categorical": false,
+    "eval_metric": null,
+    "feature_types": null,
+    "feature_weights": null,
+    "gamma": null,
+    "grow_policy": null,
+    "importance_type": null,
+    "interaction_constraints": null,
+    "learning_rate": 0.1,
+    "max_bin": null,
+    "max_cat_threshold": null,
+    "max_cat_to_onehot": null,
+    "max_delta_step": null,
+    "max_depth": 6,
+    "max_leaves": null,
+    "min_child_weight": null,
+    "missing": NaN,
+    "monotone_constraints": null,
+    "multi_strategy": null,
+    "n_estimators": 100,
+    "n_jobs": null,
+    "num_parallel_tree": null,
+    "random_state": 42,
+    "reg_alpha": null,
+    "reg_lambda": null,
+    "sampling_method": null,
+    "scale_pos_weight": null,
+    "subsample": 0.8,
+    "tree_method": null,
+    "validate_parameters": null,
+    "verbosity": null
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "model_name": "random_forest",
+  "training_time": 14.769875,
+  "cv_scores": {
+    "mean_rmse": 0.5139262836523587,
+    "std_rmse": 0.004155839592054846,
+    "scores": [
+      0.5166756183732041,
+      0.5080530195088377,
+      0.5170502130750341
+    ]
+  },
+  "train_metrics": {
+    "rmse": 0.18612959428884612,
+    "mae": 0.12133768620397312,
+    "r2": 0.973061581400256,
+    "mse": 0.03464422587013046
+  },
+  "test_metrics": {
+    "rmse": 0.4967661318628905,
+    "mae": 0.3260778124757753,
+    "r2": 0.80482035025517,
+    "mse": 0.24677658976601868
+  },
+  "model_params": {
+    "bootstrap": true,
+    "ccp_alpha": 0.0,
+    "criterion": "squared_error",
+    "max_depth": null,
+    "max_features": 1.0,
+    "max_leaf_nodes": null,
+    "max_samples": null,
+    "min_impurity_decrease": 0.0,
+    "min_samples_leaf": 1,
+    "min_samples_split": 2,
+    "min_weight_fraction_leaf": 0.0,
+    "monotonic_cst": null,
+    "n_estimators": 100,
+    "n_jobs": null,
+    "oob_score": false,
+    "random_state": 42,
+    "verbose": 0,
+    "warm_start": false
+  }
+}

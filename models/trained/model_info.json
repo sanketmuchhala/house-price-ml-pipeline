@@ -1,0 +1,56 @@
+{
+  "feature_pipeline_path": "models/trained/feature_pipeline.pkl",
+  "models": {
+    "linear_regression": {
+      "path": "models/trained/linear_regression.pkl",
+      "performance": {
+        "cv_rmse": 0.6121018257395028,
+        "test_rmse": 0.6273975123309335,
+        "test_r2": 0.6886734488021373
+      }
+    },
+    "random_forest": {
+      "path": "models/trained/random_forest.pkl",
+      "performance": {
+        "cv_rmse": 0.5139262836523587,
+        "test_rmse": 0.4967661318628905,
+        "test_r2": 0.80482035025517
+      }
+    },
+    "xgboost": {
+      "path": "models/trained/xgboost.pkl",
+      "performance": {
+        "cv_rmse": 0.48349002885018066,
+        "test_rmse": 0.4752252736064294,
+        "test_r2": 0.8213801851994709
+      }
+    }
+  },
+  "feature_names": [
+    "MedInc",
+    "AveRooms",
+    "AveOccup",
+    "Latitude",
+    "RoomDensity",
+    "BedroomRatio",
+    "IncomePerPerson",
+    "DistanceToLA",
+    "HighIncome",
+    "LowIncome",
+    "MedInc_x_AveRooms",
+    "MedInc_x_HouseAge",
+    "AveRooms_x_AveBedrms",
+    "Population_x_AveOccup",
+    "Latitude_x_Longitude"
+  ],
+  "original_features": [
+    "MedInc",
+    "HouseAge",
+    "AveRooms",
+    "AveBedrms",
+    "Population",
+    "AveOccup",
+    "Latitude",
+    "Longitude"
+  ]
+}
