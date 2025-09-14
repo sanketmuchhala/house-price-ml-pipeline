@@ -6,6 +6,14 @@
 
 A comprehensive machine learning pipeline for predicting California house prices, demonstrating production-ready ML engineering practices from data ingestion to web deployment.
 
+<img width="1680" height="1050" alt="Screenshot 2025-09-14 at 12 54 23 AM" src="https://github.com/user-attachments/assets/ef859721-fa92-4f96-86c0-00a9a9167d67" />
+<img width="1680" height="1050" alt="Screenshot 2025-09-14 at 12 54 30 AM" src="https://github.com/user-attachments/assets/3129a3c0-33db-416f-9baf-0c331e75b7cd" />
+<img width="1680" height="1050" alt="Screenshot 2025-09-14 at 12 55 49 AM" src="https://github.com/user-attachments/assets/87ad5caf-4a89-40a8-8966-12b6017b6c8e" />
+<img width="1680" height="1050" alt="Screenshot 2025-09-14 at 12 56 31 AM" src="https://github.com/user-attachments/assets/4e02de97-9f6c-4cc3-810d-40018fa7d5d8" />
+<img width="1680" height="1050" alt="Screenshot 2025-09-14 at 12 56 38 AM" src="https://github.com/user-attachments/assets/6daea533-be3d-47da-a785-6b63207646c5" />
+<img width="1680" height="1050" alt="Screenshot 2025-09-14 at 12 57 02 AM" src="https://github.com/user-attachments/assets/539b485c-d795-46d2-a421-b4232e73a51d" />
+
+
 ## Project Overview
 
 This project implements a complete end-to-end machine learning pipeline that:
